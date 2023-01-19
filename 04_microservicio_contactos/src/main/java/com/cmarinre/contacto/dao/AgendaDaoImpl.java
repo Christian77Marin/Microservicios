@@ -12,11 +12,11 @@ public class AgendaDaoImpl implements AgendaDao {
 
 	@Autowired
 	AgendaJpaSpring agenda;
-	
+
+
 	@Override
 	public void agregarContacto(Contacto contacto) {
 		agenda.save(contacto);
-
 	}
 
 	@Override
@@ -27,28 +27,29 @@ public class AgendaDaoImpl implements AgendaDao {
 	@Override
 	public void eliminarContacto(String email) {
 		agenda.eliminarPorEmail(email);
-
 	}
 
 	@Override
 	public List<Contacto> devolverContactos() {
 		return agenda.findAll();
 	}
-
+	
 	@Override
 	public void eliminarContacto(int idContacto) {
 		agenda.deleteById(idContacto);
-
+		
 	}
 
 	@Override
-	public Contacto recuperarContacto(int idContacto) {
+	public Contacto recuperarContacto(int idContacto) {	
 		return agenda.findById(idContacto).orElse(null);
 	}
 
 	@Override
 	public void actualizarContacto(Contacto contacto) {
 		agenda.save(contacto);
+		
 	}
+	
 
 }

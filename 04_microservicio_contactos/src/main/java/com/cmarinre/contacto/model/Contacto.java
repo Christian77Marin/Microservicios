@@ -2,7 +2,8 @@ package com.cmarinre.contacto.model;
 
 import java.io.Serializable;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 
 
 /**

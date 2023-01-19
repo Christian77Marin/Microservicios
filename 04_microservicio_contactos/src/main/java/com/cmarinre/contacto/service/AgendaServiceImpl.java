@@ -13,10 +13,10 @@ public class AgendaServiceImpl implements AgendaService {
 
 	@Autowired
 	AgendaDao dao;
-	
 	@Override
 	public boolean agregarContacto(Contacto contacto) {
-		if(dao.recuperarContacto(contacto.getIdContacto()) == null) {
+		//a�ade el contacto si no existe	
+		if(dao.recuperarContacto(contacto.getIdContacto())==null) {
 			dao.agregarContacto(contacto);
 			return true;
 		}
@@ -30,23 +30,24 @@ public class AgendaServiceImpl implements AgendaService {
 
 	@Override
 	public void actualizarContacto(Contacto contacto) {
-		if(dao.recuperarContacto(contacto.getIdContacto()) != null) {
+		//elimina el contacto si existe
+		if(dao.recuperarContacto(contacto.getIdContacto())!=null) {
 			dao.actualizarContacto(contacto);
 		}
+
 	}
 
 	@Override
 	public boolean eliminarContacto(int idContacto) {
-		if(dao.recuperarContacto(idContacto) != null) {
+		if(dao.recuperarContacto(idContacto)!=null) {
 			dao.eliminarContacto(idContacto);
-			return false;
+			return true;
 		}
 		return false;
 	}
 
 	@Override
 	public Contacto buscarContacto(int idContacto) {
-		// TODO Auto-generated method stub
 		return dao.recuperarContacto(idContacto);
 	}
 
