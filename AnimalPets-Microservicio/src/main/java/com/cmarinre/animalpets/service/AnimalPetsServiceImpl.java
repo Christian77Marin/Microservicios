@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cmarinre.animalpets.dao.AnimalPetsDao;
 import com.cmarinre.animalpets.model.Animal;
+import com.cmarinre.animalpets.model.Mascota;
 
 @Service
 public class AnimalPetsServiceImpl implements AnimalPetsService {
@@ -53,5 +54,41 @@ public class AnimalPetsServiceImpl implements AnimalPetsService {
 //	public Animal findAnimalByStatus(String status) {
 //		return dao.findAnimalByStatus(status);
 //	}
+	
+	@Override
+	public boolean addPet(Mascota mascota) {
+		if(dao.findPetById(mascota.getIdMascota()) == null) {
+			dao.addPet(mascota);
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public void deletePet(int id) {
+		if(dao.findPetById(id) != null) {
+			dao.deletePet(id);
+		}
+		
+	}
+	
+	@Override
+	public Mascota findPetById(int id) {
+		
+		return dao.findPetById(id);
+	}
+	
+	@Override
+	public List<Mascota> petFullList() {
+	
+		return dao.petFullList();
+	}
+	
+	@Override
+	public void updatePet(Mascota mascota) {
+		if(dao.findPetById(mascota.getIdMascota()) != null) {
+			dao.updatePet(mascota);
+		}
+	}
 
 }
