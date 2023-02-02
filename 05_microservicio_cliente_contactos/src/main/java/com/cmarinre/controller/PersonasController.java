@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.cmarinre.model.Persona;
+import com.cmarinre.service.AccesoService;
 
 @RestController
 public class PersonasController {
 
 	@Autowired
-	RestTemplate template;
-	
-	String url= "http://localhost:8080";
+	AccesoService accesoSe;
 	
 	
 	@GetMapping(value = "personas/{nombre}/{email}/{edad}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,8 +26,7 @@ public class PersonasController {
 			@PathVariable("email") String email,
 			@PathVariable("edad") int edad){
 		Persona persona = new Persona(nombre,email,edad);
-		template.postForLocation(url + "/contactos" , persona);
-		Persona[] personas = template.getForObject(url + "/contactos", Persona[].class);
+		
 		
 		return Arrays.asList(personas);
 	}
