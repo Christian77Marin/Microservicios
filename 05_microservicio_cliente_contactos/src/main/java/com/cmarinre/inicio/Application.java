@@ -11,7 +11,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 
 @EnableAsync
-@ComponentScan(basePackages = {"com.cmarinre.controller"})
+@ComponentScan(basePackages = {"com.cmarinre.controller","com.cmarinre.service"})
 @SpringBootApplication
 public class Application {
 
