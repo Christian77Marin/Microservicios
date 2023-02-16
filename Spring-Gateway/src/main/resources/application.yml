@@ -1,0 +1,31 @@
+server:
+  port: 6060
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: hoteles
+        uri: http://localhost:8000
+        predicates:
+        - Path=/hoteles
+      - id: vuelos
+        uri: http://localhost:9001
+        predicates:
+        - Path=/vuelos/**
+      - id: reservas
+        uri: http://localhost:10000
+        predicates:
+        - Path=/reservas
+      - id: hacer-reserva
+        uri: http://localhost:10000
+        predicates:
+        - Path=/reserva/**  
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
