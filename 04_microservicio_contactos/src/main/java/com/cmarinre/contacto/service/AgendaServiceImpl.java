@@ -15,7 +15,7 @@ public class AgendaServiceImpl implements AgendaService {
 	AgendaDao dao;
 	@Override
 	public boolean agregarContacto(Contacto contacto) {
-		//a�ade el contacto si no existe	
+		//añade el contacto si no existe	
 		if(dao.recuperarContacto(contacto.getIdContacto())==null) {
 			dao.agregarContacto(contacto);
 			return true;
