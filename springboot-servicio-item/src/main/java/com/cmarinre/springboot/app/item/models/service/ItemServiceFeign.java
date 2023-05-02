@@ -1,5 +1,6 @@
 package com.cmarinre.springboot.app.item.models.service;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,12 +15,16 @@ import com.cmarinre.springboot.app.item.models.Item;
 @Primary
 public class ItemServiceFeign implements ItemService {
 
+	
+	
 	@Autowired
 	private ProductoClienteRest clienteFeign;
 	
 	@Override
 	public List<Item> findAll() {
+		System.out.println("Feign");
 		return clienteFeign.listar().stream().map(p -> new Item(p,1)).collect(Collectors.toList());
+		
 	}
 
 	@Override
