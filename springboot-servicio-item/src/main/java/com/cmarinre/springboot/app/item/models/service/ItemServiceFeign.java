@@ -22,7 +22,6 @@ public class ItemServiceFeign implements ItemService {
 	
 	@Override
 	public List<Item> findAll() {
-		System.out.println("Feign");
 		return clienteFeign.listar().stream().map(p -> new Item(p,1)).collect(Collectors.toList());
 		
 	}
