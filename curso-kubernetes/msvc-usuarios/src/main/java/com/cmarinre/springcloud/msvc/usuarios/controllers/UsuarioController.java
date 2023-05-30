@@ -7,10 +7,11 @@ import com.cmarinre.springcloud.msvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import javax.validation.Valid;
+import java.util.*;
 
 @RestController
 public class UsuarioController {
@@ -34,15 +35,39 @@ public class UsuarioController {
 
     @PostMapping
     //@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> save(@RequestBody Usuario user){
+    public ResponseEntity<?> save(@Valid @RequestBody Usuario user, BindingResult result){
+
+
+
+        if(result.hasErrors()){
+            return validate(result);
+        }
+
+        if(!user.getEmail().isBlank() && service.existePorEmail(user.getEmail())){
+            return ResponseEntity.badRequest().body(Collections.singletonMap("Error","Ya existe un usuario con ese email"));
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(user));
     }
 
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Usuario user, @PathVariable Long id){
+    public ResponseEntity<?> update(@Valid @RequestBody Usuario user, @PathVariable Long id, BindingResult result){
+
+
+
+        if(result.hasErrors()){
+            return validate(result);
+        }
+
+
         Optional<Usuario> o = service.findById(id);
         if(o.isPresent()){
             Usuario usuarioDb = o.get();
+            if(service.findByEmail(user.getEmail()).isPresent() && !user.getEmail().equalsIgnoreCase(usuarioDb.getEmail())){
+                return ResponseEntity.badRequest().body(Collections.singletonMap("Error","Ya existe un usuario con ese email"));
+            }
             usuarioDb.setNombre(user.getNombre());
             usuarioDb.setEmail(user.getEmail());
             usuarioDb.setPassword(user.getPassword());
@@ -61,7 +86,13 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
-
+    private static ResponseEntity<Map<String, String>> validate(BindingResult result) {
+        Map<String,String> errores = new HashMap<>();
+        result.getFieldErrors().forEach(error -> {
+            errores.put(error.getField(),"El campo " + error.getField() + " " + error.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errores);
+    }
 
 
 

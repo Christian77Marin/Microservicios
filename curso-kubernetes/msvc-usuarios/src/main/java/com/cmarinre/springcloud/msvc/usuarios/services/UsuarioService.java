@@ -11,6 +11,8 @@ public interface UsuarioService {
     Optional<Usuario> findById(Long id);
     Usuario save(Usuario user);
     void deleteById(Long id);
+    Optional<Usuario> findByEmail(String email);
+    boolean existePorEmail(String email);
 
 
 }
