@@ -1,6 +1,6 @@
 package com.cmarinre.springcloud.msvc.cursos.controllers;
 
-import com.cmarinre.springcloud.msvc.cursos.entity.Curso;
+import com.cmarinre.springcloud.msvc.cursos.models.entity.Curso;
 import com.cmarinre.springcloud.msvc.cursos.services.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
